@@ -9,8 +9,6 @@ include_directories(${EIGEN3_INCLUDE_DIR})
 
 find_package(OpenCV 3.4 REQUIRED)
 include_directories(${OPENCV_INCLUDE_DIR})
-
-add_subdirectory(third_party/nanogui)
 # <- required packages
 
 # -> set language and compiler optimization specific flags
@@ -64,9 +62,3 @@ add_executable(run_odometry_kitti run_odometry_kitti_offline.cpp)
 #target_link_libraries(test_camera_setup opencv_core camera opencv_imgproc opencv_calib3d)
 target_link_libraries(run_odometry_kitti camera depth_estimate image_processing_global image_pyramid lm_optimizer opencv_core opencv_imgcodecs opencv_imgproc opencv_highgui opencv_photo opencv_calib3d)
 # <- link
-
-
-
-
-
-
