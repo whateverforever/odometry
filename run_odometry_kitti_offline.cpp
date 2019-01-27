@@ -3,22 +3,25 @@
 // No multi-thread used, only sequential pipeline
 // Created by Yu Wang on 2019-01-13.
 
-#include <iostream>
-#include <vector>
-#include <Eigen/Core>
-#include <opencv2/core.hpp>
-#include <opencv2/imgproc.hpp>
-#include "opencv2/imgcodecs.hpp"
-#include <opencv2/highgui.hpp>
-#include <fstream>
-#include "include/camera.h"
 #include "data_types.h"
+#include "include/camera.h"
 #include "include/depth_estimate.h"
 #include "include/image_processing_global.h"
 #include "include/image_pyramid.h"
 #include "include/lm_optimizer.h"
+#include "opencv2/imgcodecs.hpp"
+
+#include <Eigen/Core>
+#include <fstream>
+#include <iostream>
+#include <opencv2/core.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/imgproc.hpp>
 #include <se3.hpp>
 #include <typeinfo>
+#include <vector>
+
+#include <Vis.h>
 
 void load_gt_pose(const std::string& folder_name, std::vector<Eigen::Matrix<float, 3, 4, Eigen::RowMajor>>& gt_poses);
 void load_data(const std::string& folder_name, std::vector<cv::Mat> &gray, int frame_id);
@@ -26,6 +29,9 @@ void eval_pose(const std::vector<Eigen::Matrix<float, 3, 4, Eigen::RowMajor>>& g
 void plot(const std::vector<Eigen::Matrix<float, 3, 4, Eigen::RowMajor>>& gt_poses, const std::vector<Eigen::Matrix<float, 3, 4, Eigen::RowMajor>>& pred_poses);
 
 int main(){
+
+  auto myUI = new Vis();
+  myUI->start();
 
   // TODO: hardcode camera params in depth_estimate, lm_optimizer, WarpPixel, ReprojectToCameraFrame
   // Kitti sequence00, calibration
@@ -134,6 +140,8 @@ int main(){
   }
   std::cout << "sequence done!" << std::endl;
   eval_pose(gt_poses, pred_poses);
+
+  delete myUI;
 
   return 0;
 }
